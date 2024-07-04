@@ -1,3 +1,6 @@
-import { message } from '@src/app'
+import { app } from '@src/app'
 
-message()
+(async () => {
+    app.listen(3000)
+    console.log('Listening on port 3000')
+})()

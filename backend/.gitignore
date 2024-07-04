@@ -1,0 +1,26 @@
+# Dependencias de módulo
+/node_modules
+
+# Archivos de registro
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dirección de directorios de caché
+/cache
+
+# Configuraciones de entorno
+.env
+.npmrc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de compilación
+/dist/
+/build/
+
+# Logs de herramientas
+/helm/
+/.dockerenv
+/.vscode/

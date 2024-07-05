@@ -24,3 +24,4 @@ yarn-error.log*
 /helm/
 /.dockerenv
 /.vscode/
+node_modules

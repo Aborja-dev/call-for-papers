@@ -6,14 +6,18 @@ import './index.css'
 import './pico.css'
 import LoginPage from '@/pages/LoginPage'
 import RecoverPage from '@/pages/RecoverPage'
+import ProfilePage, { profileLoader } from '@/pages/ProfilePage'
+import HomePage from '@/pages/HomePage'
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      {index: true, element: <HomePage />},
       {
         path: '/profile',
-        element: <div>profile</div>
+        loader: profileLoader,
+        element: <ProfilePage />
       }
     ]
   },

@@ -17,9 +17,15 @@ export const useSesion = () => {
         }
         return null
     }   
+    const clearSesion = () => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        setSesion(null)
+    }
     return {
         saveSesion,
         getSesion,
+        clearSesion,
         sesion
     }
 }

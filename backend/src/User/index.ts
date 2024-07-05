@@ -1,5 +1,5 @@
 import { UserBase, UserProfile } from "@src/User/BaseEntitie"
-import { ForUserRepo } from "@src/User/interfaces"
+import { ForUserManagement, ForUserRepo } from "@src/User/interfaces"
 
 
 // TODO refactorizar a geter
@@ -34,5 +34,51 @@ export class UserRepoStub implements ForUserRepo {
         const user = this.users.find(user => user.id === id)
         if (!user) return
         Object.assign(user, updateData)
+    }
+}
+
+export class UserService implements ForUserManagement {
+    constructor (private repository: ForUserRepo) {}
+    async register(user: Pick<UserBase, "name" | "email" | "password" | "role">) {
+        await this.repository.create({
+            ...user,
+            password: await AuthService.hashPassword(user.password)
+        })
+    }
+    async login(email: string, password: string) {
+        const user = await this.repository.findByEmail(email)
+        if (!user) return null
+        const verified = await AuthService.verifyPassword(password, user.password)
+        if (!verified) return null
+        const token = 'token'
+        return {
+            token,
+            name: user.name,
+            role: user.role,
+            id: user.id
+        }
+    }
+    async getProfile(id: number) {
+        const user = await this.repository.findById(id)
+        return user ?? null
+    }
+    recover: (email: string) => Promise<boolean> = async (email) => {
+        const user = await this.repository.findByEmail(email)
+        return !!user
+    }
+
+    async updateProfile({id, updateData}: {id: number, updateData: Partial<UserBase>}) {
+        const user = await this.repository.findById(id)
+        if (!user) return false
+        await this.repository.update({id, updateData})
+        return true
+    }
+    changePassword: ({ id, password }: { id: number; password: string }) => Promise<boolean> = async ({ id, password }) => {
+        const user = await this.repository.findById(id)
+        await this.repository.update({ id, updateData: { 
+            ...user,
+            password: await AuthService.hashPassword(password) 
+        } })
+        return true
     }
 }

@@ -11,8 +11,8 @@ export interface ForUserRepo  {
 
 export interface ForUserManagement {
     register: (user: Pick<UserBase, "name" | "email" | "password" | "role">) => Promise<void>
-    login: (email: string, password: string) => Promise<UserSesion>
-    getProfile: (id: number) => Promise<UserProfile>
+    login: (email: string, password: string) => Promise<UserSesion | null>
+    getProfile: (id: number) => Promise<UserProfile | null>
     recover: (email: string) => Promise<boolean>
     updateProfile: ({id, updateData}: {id: number, updateData: Partial<UserBase>}) => Promise<boolean>
     changePassword: ({id, password}: {id: number, password: string}) => Promise<boolean>

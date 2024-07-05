@@ -1,3 +1,4 @@
+import { useSesion } from '@/hooks/useSesion'
 import { LoginInput } from '@/types/types'
 import React from 'react'
 import { Form, Link, useNavigate } from 'react-router-dom'
@@ -16,6 +17,7 @@ const fetchLogin = (data: LoginInput) => {
 
 
 const LoginPage = () => {
+  const { saveSesion } = useSesion()
     const navigate = useNavigate()
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>
     ) => {
@@ -26,8 +28,7 @@ const LoginPage = () => {
             password: data.password as string
         }
         const result = await fetchLogin(body)
-        saveSesionInStorage(result)
-        saveToken(result.token)
+        saveSesion(result)
         navigate('/')
     }
   return (

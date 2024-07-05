@@ -1,3 +1,4 @@
+import { LoginInput } from '@/types/types'
 import React from 'react'
 import { Form, Link, useNavigate } from 'react-router-dom'
 const baseUrl = "http://localhost:3000"
@@ -12,24 +13,8 @@ const fetchLogin = (data: LoginInput) => {
     .then(res => res.json())
 }
 
-type LoginInput = {
-    email: string
-    password: string
-}
 
-type UserSesion = {
-    token: string,
-    name: string
-    role: 'user' | 'admin'
-    id : number
-}
-const saveSesionInStorage = (data: any) => {
-    localStorage.setItem('user', JSON.stringify(data))
-}
 
-const saveToken = (token: UserSesion['token']) => {
-    localStorage.setItem('token', token)
-}
 const LoginPage = () => {
     const navigate = useNavigate()
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>

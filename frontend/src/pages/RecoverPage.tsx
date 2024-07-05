@@ -1,3 +1,4 @@
+import { useSesion } from '@/hooks/useSesion'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Form } from 'react-router-dom'
@@ -30,6 +31,7 @@ const fetchChangePassword = async (id: number, password: string) => {
 
 const RecoverPage = () => {
   const [state, setState] = useState('DEFAULT')
+  const sesion = useSesion()
   const navigate = useNavigate()
   const submitHandlerSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -45,7 +47,9 @@ const RecoverPage = () => {
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.currentTarget))
     const password = data.password as string
-    const result = await fetchChangePassword(1, password)
+    const user = sesion.getSesion()
+    if (!user) return
+    const result = await fetchChangePassword(user.id, password)
     if (result.ok) {
       navigate('/login')
     }

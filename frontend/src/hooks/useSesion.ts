@@ -7,7 +7,7 @@ export const useSesion = () => {
     const saveSesion = (data: UserSesion) => {
         const {token, ...sesion} = data
         saveToken(token)
-        saveSesionInStorage(sesion)
+        saveSesionInStorage(sesion as Sesion)
         setSesion(sesion)
     }
     const getSesion = (): Sesion | null => {
@@ -30,7 +30,7 @@ export const useSesion = () => {
     }
 }
 
-const saveSesionInStorage = (data: any) => {
+const saveSesionInStorage = (data: unknown) => {
     localStorage.setItem('user', JSON.stringify(data))
 }
 

@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react"
-const baseUrl = "http://localhost:3000"
-const fetchApi = async (url: string) => {
-  return await fetch(`${url}`).then((res) => res.json())
-}
+import { useSesion } from "@/hooks/useSesion"
+import { Outlet, useNavigate } from "react-router"
 
 function App() {
-  const [state, setState] = useState('')
-  useEffect(() => {
-    init()
-  }, [])
-  const init = async () => {
-    const data = await fetchApi(baseUrl)
-    setState(JSON.stringify(data))
-  }
-  return (
-    <>
-    <header></header>
+const navigate = useNavigate()
+const { clearSesion } = useSesion()
+return (
+  <>
+    <header>
+      <button onClick={ () => {
+        clearSesion()
+        navigate('/login')
+      }}>Logout</button>
+    </header>
     <main className="mt-10 grid place-items-center">
       <h1 >Call for papers App</h1>
-      
+      <Outlet />
     </main>
-    </>
-  )
+  </>
+)
 }
 
 export default App

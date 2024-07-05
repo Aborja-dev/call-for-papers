@@ -1,18 +1,9 @@
 import { useSesion } from '@/hooks/useSesion'
+import { fetchLogin } from '@/service/fetchApi'
 import { LoginInput } from '@/types/types'
 import React from 'react'
 import { Form, Link, useNavigate } from 'react-router-dom'
-const baseUrl = "http://localhost:3000"
-const fetchLogin = (data: LoginInput) => {
-    return fetch(`${baseUrl}/user/login`, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-}
+
 
 
 

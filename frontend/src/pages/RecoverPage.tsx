@@ -1,36 +1,20 @@
 import { useSesion } from '@/hooks/useSesion'
+import { fetchChangePassword, fetchSearchUser } from '@/service/fetchApi'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Form } from 'react-router-dom'
 
-enum states { 'DEFAULT', 'LOADING', 'ERROR', 'VALIDATED' }
-type SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => void
-const baseUrl = 'http://localhost:3000'
-const fetchSearchUser = async (email: string) => {
-  const res = await fetch(`${baseUrl}/user/recover`, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify({ email })
-  })
-  const data = await res.json()
-  return data
-}
 
-const fetchChangePassword = async (id: number, password: string) => {
-  const res = await fetch(`${baseUrl}/user/${id}/recover`, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'PATCH',
-    body: JSON.stringify({ password })
-  })
-  return res
-}
+const states = { 
+  'DEFAULT': 'DEFAULT', 
+  'LOADING': 'LOADING', 
+  'ERROR': 'ERROR', 
+  'VALIDATED': 'VALIDATED' } as const
+type State = typeof states[keyof typeof states]
+type SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => void
 
 const RecoverPage = () => {
-  const [state, setState] = useState('DEFAULT')
+  const [state, setState] = useState<State>('DEFAULT')
   const sesion = useSesion()
   const navigate = useNavigate()
   const submitHandlerSearch = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,11 +1,8 @@
+import { fetchUserProfile } from '@/service/fetchApi'
+import { UserProfile } from '@/types/types'
 import React, { useEffect } from 'react'
 import { useLoaderData, useNavigate } from 'react-router'
 
-export const fetchUserProfile = async (id: number) => {
-  const response = await fetch(`http://localhost:3000/user/${id}`)
-  const data = await response.json()
-  return data
-}
 
 export const profileLoader = async () => {
   const user = JSON.parse(localStorage.getItem('user') as string)
@@ -16,7 +13,7 @@ export const profileLoader = async () => {
 }
 
 const ProfilePage = () => {
-  const { profile } = useLoaderData()
+  const { profile } = useLoaderData() as { profile: UserProfile | null }
   const navigate = useNavigate()
   useEffect(() => {
     if (!profile) navigate('/login')

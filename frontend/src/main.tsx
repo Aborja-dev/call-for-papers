@@ -8,6 +8,7 @@ import LoginPage from '@/pages/LoginPage'
 import RecoverPage from '@/pages/RecoverPage'
 import ProfilePage, { profileLoader } from '@/pages/ProfilePage'
 import HomePage from '@/pages/HomePage'
+import RegisterPage from '@/pages/RegisterPage'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/recover',
     element: <RecoverPage />
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />
   }
 ])
 

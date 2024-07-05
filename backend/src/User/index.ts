@@ -1,9 +1,9 @@
+import { AuthService } from "@src/auth-service"
 import { UserBase, UserProfile } from "@src/User/BaseEntitie"
 import { ForUserManagement, ForUserRepo } from "@src/User/interfaces"
 
 
 // TODO refactorizar a geter
-
 export class UserRepoStub implements ForUserRepo {
     constructor (readonly users: UserBase[]) {}
     create: ForUserRepo["create"] = async (user ) => {
@@ -37,11 +37,12 @@ export class UserRepoStub implements ForUserRepo {
     }
 }
 
-export class UserService implements ForUserManagement {
+export class UserServiceStub implements ForUserManagement {
     constructor (private repository: ForUserRepo) {}
-    async register(user: Pick<UserBase, "name" | "email" | "password" | "role">) {
+    async register(user: Pick<UserBase, "name" | "email" | "password" >) {
         await this.repository.create({
             ...user,
+            role: 'user',
             password: await AuthService.hashPassword(user.password)
         })
     }

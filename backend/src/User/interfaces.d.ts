@@ -10,7 +10,7 @@ export interface ForUserRepo  {
 }
 
 export interface ForUserManagement {
-    register: (user: Pick<UserBase, "name" | "email" | "password" | "role">) => Promise<void>
+    register: (user: Pick<UserBase, "name" | "email" | "password">) => Promise<void>
     login: (email: string, password: string) => Promise<UserSesion | null>
     getProfile: (id: number) => Promise<UserProfile | null>
     recover: (email: string) => Promise<boolean>

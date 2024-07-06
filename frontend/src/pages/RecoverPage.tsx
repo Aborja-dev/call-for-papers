@@ -15,14 +15,16 @@ type SubmitHandler = (e: React.FormEvent<HTMLFormElement>) => void
 
 const RecoverPage = () => {
   const [state, setState] = useState<State>('DEFAULT')
-  const sesion = useSesion()
+  const [userID, setUserID] = useState<number | null>(null)
   const navigate = useNavigate()
   const submitHandlerSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.currentTarget))
     const email = data.email as string
     const result = await fetchSearchUser(email)
+    debugger
     if (result) {
+      setUserID(result.id)
       setState('VALIDATED')
     }
   }
@@ -31,9 +33,9 @@ const RecoverPage = () => {
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.currentTarget))
     const password = data.password as string
-    const user = sesion.getSesion()
-    if (!user) return
-    const result = await fetchChangePassword(user.id, password)
+    debugger
+    if (!userID) return
+    const result = await fetchChangePassword(userID, password)
     if (result.ok) {
       navigate('/login')
     }

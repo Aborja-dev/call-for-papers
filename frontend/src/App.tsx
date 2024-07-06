@@ -1,9 +1,14 @@
 import { useSesion } from "@/hooks/useSesion"
+import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router"
 
 function App() {
 const navigate = useNavigate()
-const { clearSesion } = useSesion()
+const { clearSesion, getSesion } = useSesion()
+useEffect(() => {
+  const user = getSesion()
+  if (!user) navigate('/login')
+}, [])
 return (
   <>
     <header>

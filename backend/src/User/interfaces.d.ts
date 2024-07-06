@@ -13,7 +13,7 @@ export interface ForUserManagement {
     register: (user: Pick<UserBase, "name" | "email" | "password">) => Promise<void>
     login: (email: string, password: string) => Promise<UserSesion | null>
     getProfile: (id: number) => Promise<UserProfile | null>
-    recover: (email: string) => Promise<boolean>
+    recover: (email: string) => Promise<UserBase | null>
     updateProfile: ({id, updateData}: {id: number, updateData: Partial<UserBase>}) => Promise<boolean>
     changePassword: ({id, password}: {id: number, password: string}) => Promise<boolean>
 }

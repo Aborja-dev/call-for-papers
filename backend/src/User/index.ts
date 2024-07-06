@@ -63,9 +63,9 @@ export class UserServiceStub implements ForUserManagement {
         const user = await this.repository.findById(id)
         return user ?? null
     }
-    recover: (email: string) => Promise<boolean> = async (email) => {
+    recover: (email: string) => Promise<UserBase | null> = async (email) => {
         const user = await this.repository.findByEmail(email)
-        return !!user
+        return user ?? null
     }
 
     async updateProfile({id, updateData}: {id: number, updateData: Partial<UserBase>}) {

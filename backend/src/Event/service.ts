@@ -1,3 +1,4 @@
+import { User } from "@prisma/client"
 import { 
     type ForEventDetailsRepoManaging, 
     type ForEventManaging, 
@@ -6,24 +7,27 @@ import { type EventBase, type EventDetails } from "@src/Event/domain/types"
 
 export class EventService implements ForEventManaging {
     constructor(
+        private user: User,
         private repository: ForEventRepoManaging,
         private eventDetailsRepo: ForEventDetailsRepoManaging
     ) { }
 
     async create(event: Omit<EventDetails, "id">) {
-        await this.repository.create(event)
+        await this.repository.create({
+            endingDate: event.endingDate,
+            name: event.name,
+            startingDate: event.startingDate,
+            status: event.status,
+            typeEvent: event.typeEvent,
+            userId: this.user.id
+        })
     }
 
     async list({ userId }: { userId: number }): Promise<EventBase[]> {
         const eventsFound = await this.repository.getAllByUser({ userId })
         return eventsFound.map(event => ({
-            id: event.id,
-            name: event.name,
-            typeEvent: event.typeEvent,
-            startingDate: new Date(event.startingDate),
-            endingDate: new Date(event.endingDate),
-            status: event.status,
-            organizer: event.organizer
+            ...event,
+            organizer: this.user
         }))
     }
 
@@ -33,8 +37,8 @@ export class EventService implements ForEventManaging {
         return { ...details }
     }
 
-    async update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<EventBase> {
-        return this.repository.update({ eventId, updateData })
+    async update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<void> {
+        await this.repository.update({ eventId, updateData })
     }
 
     async delete({ eventId }: { eventId: number }): Promise<void> {

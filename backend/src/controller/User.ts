@@ -1,16 +1,6 @@
-import { UserRepoStub, UserService } from "@src/User";
-import { ForUserManagement } from "@src/User/interfaces";
+import {  UserService } from "@src/User";
 import { PrismaUserRepo } from "@src/User/UserService";
 import { Handler } from "express";
-const repoStub = new UserRepoStub([
-    {
-        "id": 1,
-        "name": "Abraham",
-        "password": "passwordhash",
-        "email": "abraham@email.com",
-        "role": "user"
-      }
-])
 const prismaUserRepo = new PrismaUserRepo()
 const service = new UserService(prismaUserRepo)
 export const UserController: Record<string, Handler> = {

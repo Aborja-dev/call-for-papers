@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { prisma } from "@src/db/connection";
 import { UserBase, UserProfile } from "@src/User/BaseEntitie";
 import { ForUserRepo } from "@src/User/interfaces";
 
-const prisma = new PrismaClient()
+
 
 export class PrismaUserRepo implements ForUserRepo {
     users!: UserBase[];

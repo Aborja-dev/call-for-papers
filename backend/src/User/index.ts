@@ -51,7 +51,10 @@ export class UserServiceStub implements ForUserManagement {
         if (!user) return null
         const verified = await AuthService.verifyPassword(password, user.password)
         if (!verified) return null
-        const token = 'token'
+        const token = await AuthService.generateToken({
+            id: user.id,
+            role: user.role
+        })
         return {
             token,
             name: user.name,

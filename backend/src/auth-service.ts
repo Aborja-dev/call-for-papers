@@ -1,18 +1,22 @@
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 export interface ForAuthManagement {
     hashPassword: (password: string) => Promise<string>
     verifyPassword: (entry: string, password: string) => Promise<boolean>
-    createToken: (tokenInfo: any) => Promise<string>
+    generateToken: (tokenInfo: any) => Promise<string>
 }
 
 export class AuthService {
     static async hashPassword(password: string) {
-        return password + 'hash'
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(password, salt)
+        return hash
     }
     static async verifyPassword(entry: string, password: string) {
-        const passwordHashed = entry + 'hash'
-        return password === passwordHashed
+        return bcrypt.compare(entry, password)
     }
-    static async createToken(tokenInfo: any) {
-        return 'token'
+    static async generateToken(tokenInfo: any) {
+        return jwt.sign(tokenInfo, process.env.JWT_SECRET ?? "secret")
     }
 }

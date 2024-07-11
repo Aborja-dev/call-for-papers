@@ -81,7 +81,6 @@ export class UserService implements ForUserManagement {
     changePassword: ({ id, password }: { id: number; password: string }) => Promise<boolean> = async ({ id, password }) => {
         const user = await this.repository.findById(id)
         await this.repository.update({ id, updateData: { 
-            ...user,
             password: await AuthService.hashPassword(password) 
         } })
         return true

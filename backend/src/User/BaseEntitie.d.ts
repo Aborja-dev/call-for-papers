@@ -14,5 +14,6 @@ export interface UserSesion {
 }
 
 export interface UserProfile extends UserBase {
-    adress: string
+    adress: string,
+    createdAt: Date
 }

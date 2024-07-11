@@ -1,7 +1,8 @@
-import { UserRepoStub, UserServiceStub } from "@src/User";
+import { UserRepoStub, UserService } from "@src/User";
 import { ForUserManagement } from "@src/User/interfaces";
+import { PrismaUserRepo } from "@src/User/UserService";
 import { Handler } from "express";
-const repo = new UserRepoStub([
+const repoStub = new UserRepoStub([
     {
         "id": 1,
         "name": "Abraham",
@@ -10,7 +11,8 @@ const repo = new UserRepoStub([
         "role": "user"
       }
 ])
-const service = new UserServiceStub(repo)
+const prismaUserRepo = new PrismaUserRepo()
+const service = new UserService(prismaUserRepo)
 export const UserController: Record<string, Handler> = {
     register: async (req, res) => {
         const user = req.body
@@ -50,7 +52,7 @@ export const UserController: Record<string, Handler> = {
         res.send()
     },
     getAll: async (req, res) => {
-        const users = await repo.getAll()
+        const users = await prismaUserRepo.getAll()
         res.send(users)
     }
 }

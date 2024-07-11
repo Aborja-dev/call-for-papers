@@ -26,7 +26,8 @@ export class UserRepoStub implements ForUserRepo {
         if (!user) return undefined
         return {
             ...user,
-            adress: 'address'
+            adress: 'address',
+            createdAt: new Date()
         }
     }
 
@@ -37,7 +38,7 @@ export class UserRepoStub implements ForUserRepo {
     }
 }
 
-export class UserServiceStub implements ForUserManagement {
+export class UserService implements ForUserManagement {
     constructor (private repository: ForUserRepo) {}
     async register(user: Pick<UserBase, "name" | "email" | "password" >) {
         await this.repository.create({

@@ -11,6 +11,8 @@ import HomePage from '@/pages/Home/HomePage'
 import RegisterPage from '@/pages/RegisterPage'
 import { MainLayout } from '@/layouts/main'
 import CreateEventPage from '@/pages/CreateEvent/CreateEventPage'
+import DetailEventPage from '@/pages/detailEvent/page'
+import { pageLoader } from '@/pages/detailEvent/loader'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -30,6 +32,11 @@ const router = createBrowserRouter([
       {
         path: '/event/create',
         element: <CreateEventPage />
+      },
+      {
+        path: '/event/:id',
+        element: <DetailEventPage />,
+        loader: pageLoader
       }
     ]
   },

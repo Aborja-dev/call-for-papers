@@ -57,7 +57,7 @@ export const EventController: Record<keyof EventService, Handler> = {
         
     },
     getById: async (req, res) => {
-        const user = await getUser(Number(req.body.user.id));
+        const user = await getUser(req);
         if (user) {
             const service = createService(user);
             const event = await service.getById({ eventId: +req.params.eventId });

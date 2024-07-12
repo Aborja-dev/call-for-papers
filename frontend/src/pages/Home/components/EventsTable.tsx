@@ -34,6 +34,9 @@ const EventsTable = ({ events }: { events: IEvent[] }) => {
             <td className="px-6 py-4 whitespace-nowrap">
               <div className="text-sm text-gray-500">{event.typeEvent}</div>
             </td>
+            <td>
+              <Link to={`/event/${event.id}`}>Ver mas</Link>
+            </td>
           </tr>
         ))}
       </tbody>

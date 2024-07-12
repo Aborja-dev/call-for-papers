@@ -3,7 +3,7 @@ import {
     type ForEventDetailsRepoManaging, 
     type ForEventManaging, 
     type ForEventRepoManaging } from "@src/Event/domain/interfaces"
-import { type EventBase, type EventDetails } from "@src/Event/domain/types"
+import {type EventBase, type EventDetails } from "@src/Event/domain/types"
 
 export class EventService implements ForEventManaging {
     constructor(
@@ -31,10 +31,10 @@ export class EventService implements ForEventManaging {
         }))
     }
 
-    async getById({ eventId }: { eventId: number }): Promise<EventDetails> {
-        const event = this.repository.getById({ eventId })
+    async getById({ eventId }: { eventId: number }): Promise<EventDetails | null> {
+        const event = await this.repository.getById({ eventId })
         const details = await this.eventDetailsRepo.getById({ eventId })
-        return { ...details }
+        return { ...event, ...details, organizer: this.user } as any
     }
 
     async update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<void> {

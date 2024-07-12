@@ -12,10 +12,22 @@ export interface EventBase {
 export interface EventDetails extends EventBase {
     description: string
     // talks: Proposal []
-    bannerURl: string
+    bannerUrl: string
     url: string
     location: string
     organizer: UserBase
+    // proposalsStartindDate: Date[]
+    // proposalsEndingDate: Date[]
+    timezone: string
+}
+
+export interface DetailSchema {
+    id: number
+    description: string
+    // talks: Proposal []
+    bannerUrl: string
+    url: string
+    location: string
     // proposalsStartindDate: Date[]
     // proposalsEndingDate: Date[]
     timezone: string

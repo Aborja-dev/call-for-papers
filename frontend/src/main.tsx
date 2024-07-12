@@ -7,18 +7,29 @@ import './pico.css'
 import LoginPage from '@/pages/LoginPage'
 import RecoverPage from '@/pages/RecoverPage'
 import ProfilePage, { profileLoader } from '@/pages/ProfilePage'
-import HomePage from '@/pages/HomePage'
+import HomePage from '@/pages/Home/HomePage'
 import RegisterPage from '@/pages/RegisterPage'
+import { MainLayout } from '@/layouts/main'
+import CreateEventPage from '@/pages/CreateEvent/CreateEventPage'
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      {index: true, element: <HomePage />},
+      {
+        index: true, element:
+          <MainLayout>
+            <HomePage />
+          </MainLayout>
+      },
       {
         path: '/profile',
         loader: profileLoader,
         element: <ProfilePage />
+      },
+      {
+        path: '/event/create',
+        element: <CreateEventPage />
       }
     ]
   },

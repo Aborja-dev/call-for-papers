@@ -14,9 +14,9 @@ export class EventService implements ForEventManaging {
 
     async create(event: Omit<EventDetails, "id">) {
         await this.repository.create({
-            endingDate: event.endingDate,
+            endingDate: new Date(event.endingDate),
             name: event.name,
-            startingDate: event.startingDate,
+            startingDate: new Date(event.startingDate),
             status: event.status,
             typeEvent: event.typeEvent,
             userId: this.user.id
@@ -42,6 +42,6 @@ export class EventService implements ForEventManaging {
     }
 
     async delete({ eventId }: { eventId: number }): Promise<void> {
-        await this.repository.delete({ eventId })
+        await this.repository.destroy({ eventId })
     }
 }

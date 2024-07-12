@@ -13,13 +13,14 @@ const createService = (user: User) => new EventService(
     eventRepo, 
     eventDetailsRepo);
 
-const getUser = async (id: number) => {
+const getUser = async (req: any) => {
+    const id = Number(req.app.locals.user.id);
     const user = await prisma.user.findUnique({ where: { id } });
     return user
 }
 export const EventController: Record<keyof EventService, Handler> = {
     create: async (req, res) => {
-        const user = await getUser(Number(req.body.user.id));
+        const user = await getUser(req);
         if (user) {
             let service = createService(user);
             const created = await service.create(req.body);
@@ -28,7 +29,8 @@ export const EventController: Record<keyof EventService, Handler> = {
         // service = null as any
     },
     list: async (req, res) => {
-        const user = await getUser(Number(req.body.user.id));
+        console.log(req.app.locals);
+        const user = await getUser(req);
         if (user) {
             const service = createService(user);
             const events = await service.list({ userId: user.id })
@@ -41,7 +43,6 @@ export const EventController: Record<keyof EventService, Handler> = {
         const user = await getUser(Number(req.body.user.id));
         if (user) {
             const service = createService(user);
-            
             const updated = await service.update({ eventId: +req.params.eventId, updateData: req.body });
             res.status(200).json(updated);
         }

@@ -13,7 +13,7 @@ export interface ForEventRepoManaging {
     getAllByUser({ userId }: { userId: number }): Promise<IEventSchema[]>
     getById({ eventId }: { eventId: number }): Promise<IEventSchema | null>
     update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<IEventSchema>
-    delete({ eventId }: { eventId: number }): Promise<void>
+    destroy({ eventId }: { eventId: number }): Promise<void>
 }
 
 export interface ForEventDetailsRepoManaging {

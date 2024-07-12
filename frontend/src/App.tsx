@@ -1,28 +1,26 @@
 import { useSesion } from "@/hooks/useSesion"
+import Header from "@/shared/Header"
 import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router"
 
 function App() {
-const navigate = useNavigate()
-const { clearSesion, getSesion } = useSesion()
-useEffect(() => {
-  const user = getSesion()
-  if (!user) navigate('/login')
-}, [])
-return (
-  <>
-    <header>
-      <button onClick={ () => {
-        clearSesion()
-        navigate('/login')
-      }}>Logout</button>
-    </header>
-    <main className="mt-10 grid place-items-center">
-      <h1 >Call for papers App</h1>
-      <Outlet />
-    </main>
-  </>
-)
+  const navigate = useNavigate()
+  const { getSesion } = useSesion()
+  useEffect(() => {
+    const user = getSesion()
+    if (!user) navigate('/login')
+  }, [])
+  return (
+    <>
+
+      <Header />
+      <main className="mt-10 grid place-items-start w-4/5 mx-auto">
+      <div className="w-full">
+        <Outlet />
+      </div>
+      </main>
+    </>
+  )
 }
 
 export default App

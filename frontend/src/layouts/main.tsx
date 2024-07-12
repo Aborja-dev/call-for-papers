@@ -13,7 +13,9 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
     }, [sesion, navigate])
     return (
         <>
+        <div>
             {children}
+        </div>
         </>
     )
 }

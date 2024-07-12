@@ -56,7 +56,7 @@ export class PrismaEventRepo implements ForEventRepoManaging {
         })
         return event
     }
-    delete = async ({ eventId }: { eventId: number }) => {
+    destroy = async ({ eventId }: { eventId: number }) => {
         await prisma.event.delete({ where: { id: eventId } })
     }
 }

@@ -1,26 +1,24 @@
 import { User } from "@prisma/client"
+import { EventAdapter } from "@src/Event/adapter"
 import { 
-    type ForEventDetailsRepoManaging, 
-    type ForEventManaging, 
+    type ForEventDetailsRepoManaging,  
     type ForEventRepoManaging } from "@src/Event/domain/interfaces"
-import {type EventBase, type EventDetails } from "@src/Event/domain/types"
+import {NewEventInput, type EventBase, type EventDetails } from "@src/Event/domain/types"
 
-export class EventService implements ForEventManaging {
+export class EventService {
     constructor(
         private user: User,
         private repository: ForEventRepoManaging,
         private eventDetailsRepo: ForEventDetailsRepoManaging
     ) { }
 
-    async create(event: Omit<EventDetails, "id">) {
-        await this.repository.create({
-            endingDate: new Date(event.endingDate),
-            name: event.name,
-            startingDate: new Date(event.startingDate),
-            status: event.status,
-            typeEvent: event.typeEvent,
-            userId: this.user.id
-        })
+    async create(event: NewEventInput): Promise<void | Error> {
+        const insertData = EventAdapter.toInsert(event, this.user.id)
+        try {
+            await this.repository.create(insertData)
+        } catch (error) {
+            return error as Error
+        }
     }
 
     async list({ userId }: { userId: number }): Promise<EventBase[]> {

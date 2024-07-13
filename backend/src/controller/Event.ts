@@ -4,6 +4,7 @@ import {  PrismaEventRepo } from './../Event/repos/eventRepo';
 import { EventService } from "@src/Event/service";
 import { Handler } from "express";
 import { prisma } from '@src/db/connection';
+import { NewEventInput } from '@src/Event/domain/types';
 
 const eventRepo = new PrismaEventRepo();
 const eventDetailsRepo = new EventDetailsRepo();
@@ -21,11 +22,10 @@ const getUser = async (req: any) => {
 export const EventController: Record<keyof EventService, Handler> = {
     create: async (req, res) => {
         const user = await getUser(req);
-        if (user) {
-            let service = createService(user);
-            const created = await service.create(req.body);
-            res.status(201).json(created);
-        }
+        if (!user) return res.status(401).send();
+        const body: NewEventInput = req.body;
+        let service = createService(user);
+        await service.create(body);
         // service = null as any
     },
     list: async (req, res) => {
@@ -41,11 +41,10 @@ export const EventController: Record<keyof EventService, Handler> = {
     },
     update: async (req, res) => {
         const user = await getUser(Number(req.body.user.id));
-        if (user) {
-            const service = createService(user);
-            const updated = await service.update({ eventId: +req.params.eventId, updateData: req.body });
-            res.status(200).json(updated);
-        }
+        if (!user) return
+        const service = createService(user);
+        const updated = await service.update({ eventId: +req.params.eventId, updateData: req.body });
+        res.status(200).json(updated);
     },
     delete: async (req, res) => {
         const user = await getUser(Number(req.body.user.id));

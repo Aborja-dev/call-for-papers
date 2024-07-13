@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { FormComponent } from '@/types/globals';
 
-const CreateEventForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
+const EventBasicForm: React.FC<FormComponent> = ({ onSubmit }) => {
     const navigate = useNavigate()
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<EventBasic>({
         name: '',
-        typeEvent: '',
-        startDate: '',
-        endDate: ''
+        type: '',
+        end: '',
+        start: '',
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Aquí puedes manejar el envío del formulario, por ejemplo, enviar los datos a un servidor
         onSubmit(formData)
     };
 
@@ -28,26 +28,27 @@ const CreateEventForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
             </div>
             <div>
                 <label htmlFor="typeEvent" className="block text-sm font-medium">Tipo de Evento</label>
-                <select id="typeEvent" name="typeEvent" value={formData.typeEvent} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <select id="typeEvent" name="type" value={formData.type} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="">Seleccione...</option>
                     {/* Aquí puedes agregar opciones de tipos de eventos */}
-                    <option value="técnico">Técnico</option>
-                    <option value="social">Social</option>
+                    <option value="conferencia">Conferencia</option>
+                    <option value="seminario">Seminario</option>
+                    <option value="conferencia">Workshop</option>
                     {/* Más opciones si es necesario */}
                 </select>
             </div>
             <div className='flex gap-5'>
                 <div className='w-full'>
                     <label htmlFor="startDate" className="block text-sm font-medium">Fecha de Inicio</label>
-                    <input type="date" id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
+                    <input type="date" id="startDate" name="start" value={formData.start} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
                 </div>
                 <div className='w-full'>
                     <label htmlFor="endDate" className="block text-sm font-medium">Fecha de Fin</label>
-                    <input type="date" id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
+                    <input type="date" id="endDate" name="end" value={formData.end} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
                 </div>
             </div>
             <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Crear Evento
+                Siguiente
             </button>
 
             <button onClick={() => navigate(-1)} className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -57,4 +58,4 @@ const CreateEventForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
     );
 };
 
-export default CreateEventForm;
+export default EventBasicForm;

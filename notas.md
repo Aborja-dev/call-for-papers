@@ -19,3 +19,4 @@ hacer un manejador de errores en el servicio y un manejador de errores de rutas 
 refactorizar la ui con atomic design
 y usar compouser
 crear un layout para no tener que hacer un boton de volver
+tipar componentes y formularios y submithanlders

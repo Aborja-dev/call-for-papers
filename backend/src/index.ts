@@ -5,8 +5,8 @@ import { EventDetailsRepo } from '@src/Event/repos/EventDetailsRepo';
 import { PrismaEventRepo } from '@src/Event/repos/eventRepo';
 import { EventService } from '@src/Event/service'
 import { title } from 'process';
-const eventRepo = new PrismaEventRepo();
-const eventDetailsRepo = new EventDetailsRepo();
+//const eventRepo = new PrismaEventRepo();
+//const eventDetailsRepo = new EventDetailsRepo();
 (async () => {
     /* const user = await prisma.user.findUnique({ where: { id: 1 } })
     const service = new EventService(

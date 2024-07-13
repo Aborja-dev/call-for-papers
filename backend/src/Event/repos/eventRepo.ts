@@ -1,10 +1,7 @@
 import { prisma } from "@src/db/connection"
 import { ForEventRepoManaging, IEventSchema } from "@src/Event/domain/interfaces"
-import { EventBase } from "@src/Event/domain/types"
-
-
-
-export class EventRepo implements ForEventRepoManaging {
+import { EventBase, InsertEventSchema } from "@src/Event/domain/types"
+export class EventRepo  {
     events: IEventSchema[] = []
     async create(event: Omit<EventBase, "id">): Promise<IEventSchema> {
         const newEvent = {
@@ -39,8 +36,13 @@ export class EventRepo implements ForEventRepoManaging {
 }
 
 export class PrismaEventRepo implements ForEventRepoManaging {
-    create = async (event: Omit<IEventSchema, "id">) => {
-        const eventCreated = await prisma.event.create({ data: event })
+    create = async (event: InsertEventSchema) => {
+        const eventCreated = await prisma.event.create({ data: 
+            {
+                ...event,
+                detail: { create: { ...event.detail } }
+            }
+         })
         return eventCreated
     }
     getAllByUser = ({ userId }: { userId: number }) => {

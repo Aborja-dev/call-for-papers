@@ -1,4 +1,4 @@
-import { DetailSchema, EventBase, EventDetails } from "@src/Event/domain/types"
+import { DetailSchema, EventBase, EventDetails, InsertEventSchema, NewEventInput } from "@src/Event/domain/types"
 export interface IEventSchema{
     id: number;
     name: string;
@@ -9,7 +9,7 @@ export interface IEventSchema{
     userId: number;
 }
 export interface ForEventRepoManaging {
-    create(event: Omit<IEventSchema, "id">): Promise<IEventSchema>
+    create(event: InsertEventSchema): Promise<IEventSchema>
     getAllByUser({ userId }: { userId: number }): Promise<IEventSchema[]>
     getById({ eventId }: { eventId: number }): Promise<IEventSchema | null>
     update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<IEventSchema>
@@ -21,7 +21,7 @@ export interface ForEventDetailsRepoManaging {
 }
 
 export interface ForEventManaging {
-    create(event: Omit<EventDetails, "id">): Promise<void>
+    create(event: NewEventInput): Promise<void>
     list({ userId }: { userId: number }): Promise<EventBase[]>
     getById({ eventId }: { eventId: number }): Promise<EventDetails | null>
     update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<void>

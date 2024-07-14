@@ -1,3 +1,5 @@
+import Field from '@/shared/form/Field';
+import { EventDetails } from '@/types/eventTypes';
 import React, { useRef } from 'react';
 
 const eventInfo = {
@@ -8,16 +10,16 @@ const eventInfo = {
   timezone: "GMT+6",
 };
 interface FormComponent {
-    onSubmit: (data: EventDetails) => void
+  onSubmit: (data: EventDetails) => void
 }
-export const DetailEventForm: React.FC<FormComponent> = ({onSubmit}) => {
+export const DetailEventForm: React.FC<FormComponent> = ({ onSubmit }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = formRef.current;
     const formData = new FormData(form as HTMLFormElement);
-    const values = Object.fromEntries(formData) ;
+    const values = Object.fromEntries(formData);
     const data: EventDetails = {
       description: values.description as string,
       bannerUrl: values.bannerUrl as string,
@@ -31,67 +33,12 @@ export const DetailEventForm: React.FC<FormComponent> = ({onSubmit}) => {
   return (
     <div className=" mx-auto rounded-xl shadow-md overflow-hidden">
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-500">
-            Description
-          </label>
-          <input
-            type="text"
-            name="description"
-            id="description"
-            defaultValue={eventInfo.description}
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label htmlFor="bannerUrl" className="block text-sm font-medium text-gray-500">
-            Banner URL
-          </label>
-          <input
-            type="text"
-            name="bannerUrl"
-            id="bannerUrl"
-            defaultValue={eventInfo.bannerUrl}
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label htmlFor="url" className="block text-sm font-medium text-gray-500">
-            URL
-          </label>
-          <input
-            type="text"
-            name="url"
-            id="url"
-            defaultValue={eventInfo.url}
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
+        <Field label="Description" name="description" type="text" value={eventInfo.description} handleChange={() => { }} />
+        <Field label="Banner URL" name="bannerUrl" type="text" value={eventInfo.bannerUrl} handleChange={() => { }} />
+        <Field label="URL" name="url" type="text" value={eventInfo.url} handleChange={() => { }} />
         <div className='flex gap-5 w-full justify-between'>
-        <div className='w-full'>
-          <label htmlFor="location" className="block text-sm font-medium text-gray-500">
-            Location
-          </label>
-          <input
-            type="text"
-            name="location"
-            id="location"
-            defaultValue={eventInfo.location}
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div className='w-full'>
-          <label htmlFor="timezone" className="block text-sm font-medium text-gray-500">
-            Timezone
-          </label>
-          <input
-            type="text"
-            name="timezone"
-            id="timezone"
-            defaultValue={eventInfo.timezone}
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
+          <Field label="Location" name="location" type="text" value={eventInfo.location} handleChange={() => { }} />
+          <Field label="Timezone" name="timezone" type="text" value={eventInfo.timezone} handleChange={() => { }} />
         </div>
 
         <div>

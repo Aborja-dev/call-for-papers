@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { FormComponent } from '@/types/globals';
+import Field from '@/shared/form/Field';
+import { EventBasic } from '@/types/eventTypes';
+import Select from '@/shared/form/SelectField';
 
 const EventBasicForm: React.FC<FormComponent> = ({ onSubmit }) => {
     const navigate = useNavigate()
@@ -11,8 +14,8 @@ const EventBasicForm: React.FC<FormComponent> = ({ onSubmit }) => {
         start: '',
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (name: string, value: string) => {
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,37 +25,22 @@ const EventBasicForm: React.FC<FormComponent> = ({ onSubmit }) => {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium">Nombre del Evento</label>
-                <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-            <div>
-                <label htmlFor="typeEvent" className="block text-sm font-medium">Tipo de Evento</label>
-                <select id="typeEvent" name="type" value={formData.type} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option value="">Seleccione...</option>
-                    {/* Aquí puedes agregar opciones de tipos de eventos */}
-                    <option value="conferencia">Conferencia</option>
-                    <option value="seminario">Seminario</option>
-                    <option value="conferencia">Workshop</option>
-                    {/* Más opciones si es necesario */}
-                </select>
-            </div>
+            <Field label="Nombre del Evento" name="name" type="text" value={formData.name} handleChange={handleChange} />
+            <Select label="Tipo de Evento" name="type" value={formData.type} onChange={handleChange} 
+            options={[
+                { value: 'Conferencia', label: 'Conferencia' },
+                { value: 'Taller', label: 'Taller' },
+                { value: 'Workshop', label: 'Workshop' },
+            ]} />
             <div className='flex gap-5'>
-                <div className='w-full'>
-                    <label htmlFor="startDate" className="block text-sm font-medium">Fecha de Inicio</label>
-                    <input type="date" id="startDate" name="start" value={formData.start} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-                </div>
-                <div className='w-full'>
-                    <label htmlFor="endDate" className="block text-sm font-medium">Fecha de Fin</label>
-                    <input type="date" id="endDate" name="end" value={formData.end} onChange={handleChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-                </div>
+                <Field label="Fecha de Inicio" name="start" type="date" value={formData.start} handleChange={handleChange} />
+                <Field label="Fecha de Fin" name="end" type="date" value={formData.end} handleChange={handleChange} />
             </div>
             <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Siguiente
             </button>
-
             <button onClick={() => navigate(-1)} className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                volver
+                Volver
             </button>
         </form>
     );

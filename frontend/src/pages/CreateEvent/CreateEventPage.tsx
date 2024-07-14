@@ -2,6 +2,7 @@ import { useSesion } from '@/hooks/useSesion'
 import EventBasicForm from '@/pages/CreateEvent/components/CreateEventForm'
 import { DetailEventForm } from '@/pages/CreateEvent/components/EventDetailForm'
 import { Event } from '@/service/API/api'
+import { EventBasic, EventDetails, EventType } from '@/types/eventTypes'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 

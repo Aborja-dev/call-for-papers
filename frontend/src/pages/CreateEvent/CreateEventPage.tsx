@@ -7,7 +7,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 const CreateEventPage:React.FC = () => {
-  const { getSesion } = useSesion()
   const navigate = useNavigate()
   const [event, setEvent] = useState<EventType>({
     name: '',
@@ -21,15 +20,13 @@ const CreateEventPage:React.FC = () => {
     type: '',
     end: '',
     start: '',
-    status: ''
+    status: 'Enviado'
   })
   const [step, setStep] = useState<number>(1)
   const submitHandler = async (detail: EventDetails) => {
-    const user = getSesion()
-    if (!user) return
     const newEvent: EventType = {
       ...event,
-      status: 'ENVIADO',
+      status: 'Enviado',
       details: detail
     }
     Event.create(newEvent)

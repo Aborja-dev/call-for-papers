@@ -37,6 +37,9 @@ const EventsTable = ({ events }: { events: IEvent[] }) => {
             <td>
               <Link to={`/event/${event.id}`}>Ver mas</Link>
             </td>
+            <td>
+              <Link to={`/edit/${event.id}`}>Editar</Link>
+            </td>
           </tr>
         ))}
       </tbody>

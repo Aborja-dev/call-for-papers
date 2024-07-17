@@ -35,6 +35,9 @@ importers:
       module-alias:
         specifier: ^2.2.3
         version: 2.2.3
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
     devDependencies:
       '@types/bcrypt':
         specifier: ^5.0.2
@@ -2563,7 +2566,6 @@ packages:
 
   /picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
-    dev: true
 
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}

@@ -20,3 +20,11 @@ refactorizar la ui con atomic design
 y usar compouser
 crear un layout para no tener que hacer un boton de volver
 tipar componentes y formularios y submithanlders
+hacer un compouse de select para modularizar el item
+refactorizar los formularios para que tengan un valor por defecto
+hacer los servicios de las paginas 
+que el formulario sea controlado internamente
+hacer los adpatadores desde la api
+refactorizar el servicio para quitar el user en el contructor
+modificar el formulario de edit para que cargue bien los doato
+que el controlador cree el servicio a partir del repositorio sin sabeer de la implementacion

@@ -13,6 +13,7 @@ import { MainLayout } from '@/layouts/main'
 import CreateEventPage from '@/pages/CreateEvent/CreateEventPage'
 import DetailEventPage from '@/pages/detailEvent/page'
 import { pageLoader } from '@/pages/detailEvent/loader'
+import EditEventPage from '@/pages/EditEvent/page'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
       {
         path: '/event/:id',
         element: <DetailEventPage />,
+        loader: pageLoader
+      },
+      {
+        path: '/edit/:id',
+        element: <EditEventPage />,
         loader: pageLoader
       }
     ]

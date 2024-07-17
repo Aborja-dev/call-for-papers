@@ -1,6 +1,6 @@
 import { prisma } from "@src/db/connection"
 import { ForEventRepoManaging, IEventSchema } from "@src/Event/domain/interfaces"
-import { EventBase, InsertEventSchema } from "@src/Event/domain/types"
+import { EventBase, InsertEventSchema, UpdateEventSchema } from "@src/Event/domain/types"
 export class EventRepo  {
     events: IEventSchema[] = []
     async create(event: Omit<EventBase, "id">): Promise<IEventSchema> {
@@ -35,7 +35,8 @@ export class EventRepo  {
     }
 }
 
-export class PrismaEventRepo implements ForEventRepoManaging {
+// export class PrismaEventRepo implements ForEventRepoManaging {
+    export class PrismaEventRepo {
     create = async (event: InsertEventSchema) => {
         const eventCreated = await prisma.event.create({ data: 
             {
@@ -51,12 +52,18 @@ export class PrismaEventRepo implements ForEventRepoManaging {
     getById = ({ eventId }: { eventId: number }) => {
         return prisma.event.findUnique({ where: { id: eventId } })
     }
-    update = async ({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }) => {
-        const event = await prisma.event.update({ 
-            where: { id: eventId }, 
-            data: updateData 
-        })
-        return event
+    update = async ({ eventId, eventData }: { eventId: number, eventData: UpdateEventSchema}) => {
+        try {
+            const event = await prisma.event.update({ 
+                where: { id: eventId }, 
+                data: {
+                    ...eventData,
+                } 
+            })    
+            return event
+        } catch (error) {
+            console.error(error)
+        }
     }
     destroy = async ({ eventId }: { eventId: number }) => {
         await prisma.event.delete({ where: { id: eventId } })

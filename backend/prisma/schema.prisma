@@ -21,6 +21,15 @@ model User {
   role String
   createdAt DateTime @default(now())
   events Event[]
+  profile Profile?
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  avatar String
+  description String
+  User User? @relation(fields: [userId], references: [id])
+  userId Int @unique
 }
 
 model Event {

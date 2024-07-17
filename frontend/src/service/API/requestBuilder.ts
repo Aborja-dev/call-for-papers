@@ -33,7 +33,7 @@ export class AppRequest {
         }
         return this
     }
-    patch <B>({body}: { body: B}) {
+    patch <B>(body:B) {
         this.config = {
             ...this.config,
             method: 'PATCH',

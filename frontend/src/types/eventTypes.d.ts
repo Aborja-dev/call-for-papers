@@ -4,18 +4,18 @@ interface EventBasic {
     start: string
     end: string
 }
-const EVENTS_TYPE = {
+export const EVENTS_TYPE = {
     'CONFERENCE': 'Conference',
     'WORKSHOP': 'Workshop',
     'SEMINAR': 'Seminar',
     'OTHER': 'Other'
 } as const
 type TypeEvent = typeof EVENTS_TYPE[keyof typeof EVENTS_TYPE]
-const EVENTS_STATUS = {
+export const EVENTS_STATUS = {
     'ENVIADO': 'Enviado',
     'APROBADO': 'Aprobado',
     'RECHAZADO': 'Rechazado'
-}
+} as const
 type Status = typeof EVENTS_STATUS[keyof typeof EVENTS_STATUS]
 export interface EventDetails {
     description: string

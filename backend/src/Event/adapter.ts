@@ -1,4 +1,4 @@
-import { InsertEventSchema, NewEventInput } from "@src/Event/domain/types"
+import { EditEventInput, InsertEventSchema, NewEventInput, UpdateEventDetailsSchema, UpdateEventSchema } from "@src/Event/domain/types"
 
 
 export const EventAdapter = {
@@ -10,5 +10,21 @@ export const EventAdapter = {
         status: event.status,
         userId,
         detail: event.details
+    }),
+    toUpdate: (event: Partial<EditEventInput>): Partial<UpdateEventSchema>  => ({
+        endingDate: new Date(event.end as string),
+        startingDate: new Date(event.start as string),
+        status: event.status,
+    }),
+
+}
+
+export const EventdetailAdapter = {
+    toUpdate: (event: Partial<EditEventInput>): Partial<UpdateEventDetailsSchema>  => ({
+        description: event.description,
+        location: event.location,
+        bannerUrl: event.bannerUrl,
+        url: event.url,
+        timezone: event.timezone
     })
 }

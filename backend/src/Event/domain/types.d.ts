@@ -73,3 +73,27 @@ export interface InsertEventSchema {
     userId: number 
     detail: EventDetails
 }
+
+export interface UpdateEventSchema {
+    startingDate: Date
+    endingDate: Date
+    status: Status
+}
+
+export interface UpdateEventDetailsSchema {
+    description: string
+    location: string
+    url: string
+    bannerUrl: string
+    timezone: string
+}
+export interface EditEventInput {
+    start: string
+    end: string
+    location: string
+    description: string
+    bannerUrl: string
+    url: string
+    timezone: string
+    status: Status
+}

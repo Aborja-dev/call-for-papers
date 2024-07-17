@@ -3,7 +3,7 @@ import { EventAdapter } from "@src/Event/adapter"
 import { 
     type ForEventDetailsRepoManaging,  
     type ForEventRepoManaging } from "@src/Event/domain/interfaces"
-import {NewEventInput, type EventBase, type EventDetails } from "@src/Event/domain/types"
+import {EditEventInput, NewEventInput, type EventBase, type EventDetails } from "@src/Event/domain/types"
 
 export class EventService {
     constructor(
@@ -35,8 +35,9 @@ export class EventService {
         return { ...event, ...details, organizer: this.user } as any
     }
 
-    async update({ eventId, updateData }: { eventId: number, updateData: Partial<EventBase> }): Promise<void> {
-        await this.repository.update({ eventId, updateData })
+    async update({ eventId, updateData }: { eventId: number, updateData: Partial<EditEventInput> }) {
+        const _updateData = EventAdapter.toUpdate(updateData)
+        await this.repository.update({ eventId, updateData: _updateData })
     }
 
     async delete({ eventId }: { eventId: number }): Promise<void> {
